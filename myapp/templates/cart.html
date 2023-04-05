@@ -1,0 +1,97 @@
+{% extends 'header.html'%}
+{% load  static  %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Product</title>
+
+	
+</head>
+
+<body class="animsition">
+	
+	
+	
+	<!-- Product -->
+	<br><br>
+	<div class="bg0 m-t-23 p-b-140" style="margin-top:100px;">
+		<div class="container">
+
+			<div class="row isotope-grid">
+				{% for i in carts %}
+				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+					<!-- Block2 -->
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img src="{{i.product.product_image.url}}" width="250px" height="300px" alt="IMG-PRODUCT">
+
+							<a href="{% url 'product_details' pk=i.product.pk %}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+								Quick View
+							</a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									{{i.product.product_name}}
+								</a>
+
+								<span class="stext-105 cl3">
+									Project Price : {{i.product.product_price}}
+								</span>
+								<span class="stext-105 cl3">
+									<form name="change_qty" method="post" action="{% url 'change_qty' %}">
+										{% csrf_token %}
+										<input type="hidden" name="cid" value="{{i.id}}">
+										Project Qty : <input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();">
+									</form>
+								</span>
+								<span class="stext-105 cl3">
+									Total Price : {{i.total_price}}
+								</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04" src="{%  static 'images/icons/icon-heart-01.png' %}" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="{%  static 'images/icons/icon-heart-02.png' %}" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-4">
+				<a href="#" class="flex-c-m stext-1 cl5 size-103 bg2 bor1 hov-btn1 p-lr-10 trans-04">
+					<form name="payment" method="post" action="">
+						Payment : {{net_price}}
+						<input type="hidden" name="amount" value="{{net_price}}">
+                    </form>
+				</a>
+			</div>
+			<div >
+				<input type="radio" name="usertype" value="user" size-1 >Cash On Delivery    
+				<input type="radio" name="usertype" value="seller">Paytm
+			</div>
+			<div class="flex-c-m flex-w w-full p-t-4">
+				<a href="#" class="flex-c-m stext-1 cl5 size-105 bg10 bor1 hov-btn1 p-lr-10 trans-04">
+					<form name="payment" method="post" action="">
+						Estimated Delivery Date within 6-7 Days
+						<input type="hidden" name="amount" value="{{net_price}}">
+                    </form>
+				</a>
+			</div>
+			
+
+
+			
+		</div>
+	</div>
+
+</body>
+</html>
+{% endblock %}
